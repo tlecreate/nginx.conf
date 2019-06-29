@@ -32,7 +32,7 @@ export DOMAIN=youdomain.com
     mkdir -p /var/www/phpmyadmin/htdocs
 ```
 
-- copy needed template and replace example to your domain
+- copy needed template and replace example to your domain ** phpmyadmin not require replace domain **
 
 ```sh
 # don't forget to set DOMAIN from above example
@@ -41,7 +41,7 @@ export DOMAIN=youdomain.com
 # copy
     cp ./sites-templates/default.php_fastcgi.cache.https.conf ./sites-available/$DOMAIN.conf
 
-# replace example.com to yourdomain.com
+# replace example.com to yourdomain.com ** except phpmyadmin.conf **
     sed -i -r "s/example.com/$DOMAIN/g" ./sites-available/$DOMAIN.conf
 ```
 
