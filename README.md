@@ -32,17 +32,24 @@ export DOMAIN=youdomain.com
     mkdir -p /var/www/phpmyadmin/htdocs
 ```
 
-- copy needed template and replace example to your domain ** phpmyadmin not require replace domain **
+- copy needed template and replace example to your domain **phpmyadmin no require replace domain**
 
 ```sh
 # don't forget to set DOMAIN from above example
 # export DOMAIN=youdomain.com
 
 # copy
-    cp ./sites-templates/default.php_fastcgi.cache.https.conf ./sites-available/$DOMAIN.conf
+    cp /etc/nginx/sites-templates/default.php_fastcgi.cache.https.conf /etc/nginx/sites-available/$DOMAIN.conf
 
-# replace example.com to yourdomain.com ** except phpmyadmin.conf **
-    sed -i -r "s/example.com/$DOMAIN/g" ./sites-available/$DOMAIN.conf
+# **except phpmyadmin.conf** replace example.com to yourdomain.com
+    sed -i -r "s/example.com/$DOMAIN/g" /etc/nginx/sites-available/$DOMAIN.conf
+
+# **except phpmyadmin.conf** create symlink in sites-enable
+    ln -s /etc/nginx/sites-available/$DOMAIN.conf /etc/nginx/sites-enable/$DOMAIN.conf
+
+# for phpmyadmin.conf
+    cp /etc/nginx/sites-templates/phpmyadmin.conf /etc/nginx/sites-available/
+    ln -s /etc/nginx/sites-available/phpmyadmin.conf /etc/nginx/sites-enable/
 ```
 
 ## Free SSL
@@ -53,7 +60,7 @@ export DOMAIN=youdomain.com
 # This example inspire from https://nginxconfig.io
 
 # If you want to use certbot please change to ssl path /etc/ssl to /etc/letsencrypt/live
-    sed -i -r "s/\/etc\/ssl/\/etc\/letsencrypt\/live/g" ./sites-available/$DOMAIN.conf
+    sed -i -r "s/\/etc\/ssl/\/etc\/letsencrypt\/live/g" /etc/nginx/sites-available/$DOMAIN.conf
 
 # Comment out SSL related directives in configuration:
     sed -i -r 's/(listen .*443)/\1;#/g; s/(ssl_(certificate|certificate_key|trusted_certificate) )/#;#\1/g' /etc/nginx/sites-available/$DOMAIN.conf
