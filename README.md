@@ -14,6 +14,7 @@ export DOMAIN=youdomain.com
 
 # letsencrypt
     mkdir -p /var/www/_letsencrypt
+    mkdir -p /etc/letsencrypt/live
 
 # proxy, fastchi cache
     mkdir -p /var/cache/nginx/
